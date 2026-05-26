@@ -1,0 +1,238 @@
+🎥 GUÍA VISUAL - PDF to Word Converter
+═════════════════════════════════════════
+
+PASO 1: PREPARACIÓN
+───────────────────────────────────────
+
+1.1 Instalar Tesseract OCR
+   • Ir a: https://github.com/UB-Mannheim/tesseract/wiki
+   • Descargar: tesseract-ocr-w64-setup-v5.x.x.exe
+   • Instalar: Siguiente > Siguiente > Siguiente
+   • Resultado: Tesseract en C:\Program Files\Tesseract-OCR
+
+1.2 Instalar Python (si no lo tienes)
+   • Ir a: https://www.python.org
+   • Descargar Python 3.11+
+   • IMPORTANTE: Marcar "Add Python to PATH"
+   • Verificar: Abrir cmd y escribir: python --version
+
+
+PASO 2: INSTALACIÓN AUTOMÁTICA (RECOMENDADO)
+───────────────────────────────────────────
+
+2.1 En Windows:
+   • Ir a la carpeta: pdf_to_word_converter
+   • Doble clic en: install.bat
+   • Esperar a que se complete (5-10 minutos)
+   • Verás mensajes como:
+     ✓ Python detectado
+     ✓ Entorno virtual creado
+     ✓ Dependencias instaladas
+     ✓ Tesseract detectado (o advertencia)
+
+2.2 Si todo OK:
+   • Verás: "✓ Instalación completada correctamente"
+   • Pulsar cualquier tecla para cerrar
+
+
+PASO 3: EJECUTAR LA APLICACIÓN
+─────────────────────────────────────────
+
+3.1 Opción A - Script de ejecución (fácil):
+   • Doble clic en: run.bat
+   • Verás: "🌐 Abre tu navegador en: http://localhost:8000"
+   • Copiar URL en navegador
+
+3.2 Opción B - Manual:
+   • Abrir cmd o PowerShell
+   • Navegar a carpeta: cd pdf_to_word_converter
+   • Activar entorno: venv\Scripts\activate
+   • Iniciar servidor: python main.py
+   • Ir a: http://localhost:8000
+
+
+PASO 4: USAR LA APLICACIÓN
+──────────────────────────────────────
+
+4.1 Interfaz Web:
+   □ Seleccionar modo:
+     • Simple: Solo texto (rápido)
+     • Avanzado: Con imágenes (más detallado)
+   
+   □ Cargar PDF:
+     • Opción 1: Arrastra y suelta el PDF en el área gris
+     • Opción 2: Click en el área para seleccionar archivo
+   
+   □ Convertir:
+     • Click botón "Convertir a Word"
+     • Esperar (10-60 segundos)
+     • Se descargará automáticamente archivo .docx
+
+4.2 Resultado:
+   • Archivo Word en Descargas
+   • Completamente editable
+   • Puedes abrir en Word, LibreOffice, Google Docs, etc.
+
+
+PASO 5: VERIFICACIÓN DEL SISTEMA (OPCIONAL)
+─────────────────────────────────────────────
+
+5.1 Si algo no funciona:
+   • Abrir cmd
+   • cd pdf_to_word_converter
+   • python check_system.py
+   • Verá qué falta instalar
+
+5.2 Solucionador automático:
+   • Script detecta y sugiere soluciones
+   • Instala lo que falta
+   • Re-ejecuta check_system.py para verificar
+
+
+ARCHIVOS IMPORTANTES
+═════════════════════════════════════════
+
+📁 Carpetas que se crean:
+   • uploads/  ← PDFs subidos (se limpian automáticamente)
+   • outputs/  ← Word generados (24 horas por defecto)
+   • venv/     ← Entorno virtual Python (no tocar)
+
+📄 Documentos para leer:
+   • README.md          ← Documentación completa
+   • INICIO_RAPIDO.md   ← Inicio rápido
+   • WINDOWS_SETUP.md   ← Solución de problemas
+   • PROYECTO_INFO.txt  ← Este archivo
+
+
+EJEMPLOS DE USO AVANZADO
+═════════════════════════════════════════
+
+Usar desde Python:
+──────────────────
+import requests
+
+# Convertir un PDF
+with open('mi_documento.pdf', 'rb') as f:
+    files = {'file': f}
+    data = {'mode': 'simple'}
+    response = requests.post(
+        'http://localhost:8000/api/convert',
+        files=files,
+        data=data
+    )
+
+# Guardar resultado
+with open('mi_documento.docx', 'wb') as f:
+    f.write(response.content)
+
+Usar desde cURL:
+────────────────
+curl -F "file=@mi_documento.pdf" \
+     -F "mode=simple" \
+     http://localhost:8000/api/convert \
+     -o resultado.docx
+
+
+OPTIMIZACIÓN Y CONFIGURACIÓN
+═════════════════════════════════════════
+
+Para PDFs en otros idiomas:
+───────────────────────────
+1. Abrir: config.py
+2. Cambiar: OCR_LANGUAGES = "fra+eng"  (para francés)
+   Opciones: spa (español), eng (inglés), fra (francés), 
+             deu (alemán), ita (italiano), por (portugués), etc.
+
+Para mejor calidad OCR:
+──────────────────────
+1. Abrir: config.py
+2. Aumentar: DPI = 300  (de 200 a 300)
+   Nota: Será más lento pero mejor resultado
+
+Para archivos más grandes:
+──────────────────────────
+1. Abrir: config.py
+2. Aumentar: MAX_FILE_SIZE_MB = 100
+
+
+SOLUCIÓN RÁPIDA DE PROBLEMAS
+═════════════════════════════════════════
+
+Problema: "Tesseract no encontrado"
+Solución:
+1. Desinstalar Tesseract completamente
+2. Reiniciar PC
+3. Instalar desde: https://github.com/UB-Mannheim/tesseract/wiki
+4. Reiniciar servidor
+
+Problema: "Puerto 8000 ya en uso"
+Solución:
+1. Cambiar en main.py: port=8001
+2. Abrir: http://localhost:8001
+
+Problema: "El OCR no reconoce bien"
+Solución:
+1. Usar PDFs con mejor calidad/resolución
+2. Probar con modo avanzado
+3. Aumentar DPI en config.py
+
+Problema: "Aplicación se congela"
+Solución:
+1. PDF muy grande: partir en múltiples archivos
+2. PC lenta: aumentar tiempo espera (ctrl+c para detener)
+3. Reiniciar servidor: Ctrl+C en la ventana del servidor
+
+
+CONSEJOS Y TRUCOS
+═════════════════════════════════════════
+
+✨ Para mejor rendimiento:
+   • Usar PDFs con buena calidad
+   • Evitar archivos > 100 MB
+   • Cerrar otras aplicaciones pesadas
+
+✨ Para mejor OCR:
+   • PDFs nativos > PDFs escaneados
+   • Escaneados a mínimo 300 DPI
+   • Márgenes limpios sin sombras
+
+✨ Usar scripts para procesar lotes:
+   • Ver: examples.py
+   • Procesa múltiples PDFs automáticamente
+
+
+MANTENIMIENTO
+═════════════════════════════════════════
+
+Limpiar archivos temporales:
+   • Se hace automáticamente
+   • Carpeta uploads/ se limpia después de convertir
+   • Carpeta outputs/ se mantiene 24 horas
+
+Actualizar dependencias:
+   pip install --upgrade -r requirements.txt
+
+Resetear proyecto (empezar de cero):
+   1. Eliminar carpeta: venv/
+   2. Ejecutar: install.bat
+   3. Ejecutar: run.bat
+
+
+SOPORTE Y AYUDA
+═════════════════════════════════════════
+
+Antes de reportar problema:
+   1. Ejecutar: python check_system.py
+   2. Leer: WINDOWS_SETUP.md
+   3. Leer: README.md
+
+Si sigue sin funcionar:
+   1. Copiar mensaje de error
+   2. Verificar instalación de Tesseract
+   3. Reinstalar dependencias: pip install -r requirements.txt
+   4. Reiniciar PC y servidor
+
+
+═════════════════════════════════════════
+¡Disfruta convertiendo tus PDFs a Word! 📄✨
+═════════════════════════════════════════

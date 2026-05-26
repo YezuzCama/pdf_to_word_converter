@@ -1,0 +1,248 @@
+📦 PDF to Word Converter
+═════════════════════════════════════════
+
+🎯 DESCRIPCIÓN
+Una aplicación web para convertir archivos PDF a documentos Word (.docx) editables,
+con soporte para dos modos: simple (OCR) y avanzado (con formato).
+
+📁 ESTRUCTURA DEL PROYECTO
+═════════════════════════════════════════
+
+pdf_to_word_converter/
+│
+├── 🐍 BACKEND (Python/FastAPI)
+│   ├── main.py                 ← Aplicación principal FastAPI
+│   ├── pdf_converter.py        ← Lógica de conversión PDF→Word
+│   ├── config.py               ← Configuración personalizable
+│   │
+│   ├── 📊 UTILIDADES
+│   ├── check_system.py         ← Verificar requisitos del sistema
+│   ├── examples.py             ← Ejemplos de uso de la API
+│   │
+│   └── requirements.txt         ← Dependencias Python
+│
+├── 🎨 FRONTEND (Web)
+│   └── static/
+│       └── index.html          ← Interfaz web interactiva
+│
+├── 🔧 SCRIPTS DE INSTALACIÓN/EJECUCIÓN
+│   ├── install.bat             ← Instalador automático (Windows)
+│   └── run.bat                 ← Script para ejecutar (Windows)
+│
+├── 📚 DOCUMENTACIÓN
+│   ├── README.md               ← Guía completa del proyecto
+│   ├── INICIO_RAPIDO.md        ← Guía de inicio rápido
+│   ├── WINDOWS_SETUP.md        ← Guía específica para Windows
+│   └── PROYECTO_INFO.txt       ← Este archivo
+│
+├── 🗂️ DIRECTORIOS (se crean automáticamente)
+│   ├── uploads/                ← PDFs subidos (temporal)
+│   ├── outputs/                ← Documentos Word generados
+│   └── venv/                   ← Entorno virtual Python
+│
+└── .gitignore                  ← Archivos a ignorar en Git
+
+
+⚙️ CARACTERÍSTICAS PRINCIPALES
+═════════════════════════════════════════
+
+✨ Conversión en DOS MODOS:
+
+  1. 📄 MODO SIMPLE
+     - Extracción de texto mediante OCR (Tesseract)
+     - Rápido y eficiente
+     - Ideal para documentos con mucho texto
+     - Formato básico pero limpio
+
+  2. 🎨 MODO AVANZADO
+     - Intenta preservar formato original
+     - Incluye miniaturas de las páginas originales
+     - Detección automática de encabezados
+     - Mejor para documentos con diseño especial
+
+✨ INTERFAZ MODERNA:
+   - Drag & drop para cargar archivos
+   - Indicadores de progreso en tiempo real
+   - Descarga automática del archivo Word
+   - Responsive design (móvil + desktop)
+   - Validación de archivos en el cliente
+
+✨ TECNOLOGÍA:
+   - Backend: FastAPI (Python asincrónico)
+   - Frontend: HTML5 + CSS3 + JavaScript vanilla
+   - OCR: Tesseract
+   - PDF: pdf2image + Poppler
+   - Word: python-docx
+
+
+🚀 INICIO RÁPIDO
+═════════════════════════════════════════
+
+OPCIÓN 1: Script automático (Windows)
+──────────────────────────────────────
+1. Doble clic en: install.bat
+2. Esperar a que se complete la instalación
+3. Doble clic en: run.bat
+4. Abre: http://localhost:8000
+
+OPCIÓN 2: Manual (Todos los SO)
+──────────────────────────────────────
+1. python -m venv venv
+2. venv\Scripts\activate
+3. pip install -r requirements.txt
+4. python main.py
+5. Abre: http://localhost:8000
+
+OPCIÓN 3: Verificar sistema primero
+──────────────────────────────────────
+1. python check_system.py
+2. Solucionar cualquier problema detectado
+3. Seguir OPCIÓN 1 o 2
+
+
+📋 REQUISITOS DEL SISTEMA
+═════════════════════════════════════════
+
+✓ OBLIGATORIO:
+  - Python 3.8+
+  - Tesseract OCR (https://github.com/UB-Mannheim/tesseract/wiki)
+  - 500 MB de espacio libre
+
+✓ RECOMENDADO:
+  - CPU moderna (i5/Ryzen 5+) para OCR más rápido
+  - Mínimo 2GB RAM
+  - Conexión a internet para instalación inicial
+
+
+🔌 USO DE LA API
+═════════════════════════════════════════
+
+ENDPOINT: POST /api/convert
+
+Parámetros:
+  - file: Archivo PDF (form-data)
+  - mode: 'simple' o 'advanced' (form-data)
+
+Ejemplo con cURL:
+  curl -F "file=@documento.pdf" \
+       -F "mode=simple" \
+       http://localhost:8000/api/convert \
+       -o documento.docx
+
+Ejemplo con Python:
+  import requests
+  
+  with open('documento.pdf', 'rb') as f:
+      files = {'file': f}
+      data = {'mode': 'simple'}
+      response = requests.post(
+          'http://localhost:8000/api/convert',
+          files=files,
+          data=data
+      )
+  
+  with open('documento.docx', 'wb') as f:
+      f.write(response.content)
+
+
+🐛 SOLUCIÓN DE PROBLEMAS
+═════════════════════════════════════════
+
+❌ Error: "TesseractNotFoundError"
+   → Instalar Tesseract OCR desde:
+     https://github.com/UB-Mannheim/tesseract/wiki
+
+❌ Error: "No module named 'pdf2image'"
+   → Ejecutar: pip install --upgrade pdf2image
+
+❌ Error: "ModuleNotFoundError: No module named 'fastapi'"
+   → Asegúrate de activar el entorno virtual
+   → Ejecutar: pip install -r requirements.txt
+
+❌ El servidor no inicia
+   → Verificar que puerto 8000 no esté en uso
+   → Ver log del servidor para más detalles
+
+❌ El OCR no funciona bien
+   → Usar PDFs con buena calidad
+   → OCR con idiomas diferentes: editar config.py
+
+
+📈 MEJORAS FUTURAS
+═════════════════════════════════════════
+
+[ ] Soporte para múltiples idiomas en interfaz
+[ ] Procesamiento en lotes (batch upload)
+[ ] Integración con Google Drive / OneDrive
+[ ] Editor en tiempo real del documento
+[ ] Mejora automática de imágenes escaneadas
+[ ] Sistemas de autenticación
+[ ] Base de datos para historial de conversiones
+[ ] Exposición de API REST pública
+[ ] Docker container
+[ ] Tests unitarios completos
+
+
+🤝 CONTRIBUIR
+═════════════════════════════════════════
+
+Para mejorar esta aplicación:
+1. Reportar bugs en WINDOWS_SETUP.md
+2. Sugerir mejoras en el README.md
+3. Mejorar la interfaz editando static/index.html
+4. Optimizar OCR en pdf_converter.py
+
+
+📞 SOPORTE
+═════════════════════════════════════════
+
+Consultar en este orden:
+1. README.md - Documentación completa
+2. INICIO_RAPIDO.md - Guía rápida
+3. WINDOWS_SETUP.md - Problemas en Windows
+4. check_system.py - Diagnosticar problemas
+
+
+📝 NOTAS IMPORTANTES
+═════════════════════════════════════════
+
+⚠️  IMPORTANTE:
+   - Tesseract es OBLIGATORIO para que funcione
+   - El OCR depende de la calidad del PDF original
+   - PDFs escaneados requieren mejor resolución
+   - Archivos muy grandes pueden tardar más tiempo
+
+💾 ALMACENAMIENTO:
+   - uploads/ se limpia automáticamente
+   - outputs/ se retiene 24 horas (configurable)
+   - Documentos Word se descargan automáticamente
+
+🔐 SEGURIDAD:
+   - No se guardan archivos en servidores públicos
+   - Todo se procesa localmente
+   - CORS habilitado para desarrollo
+
+
+📊 ESTADÍSTICAS
+═════════════════════════════════════════
+
+Archivos del proyecto:    12 archivos Python/Web
+Líneas de código:         ~2000 LOC
+Documentación:            4 archivos .md
+Tamaño total:            ~300 KB (sin venv)
+Tiempo de instalación:   5-10 minutos
+Tiempo de conversión:    10-60 segundos por PDF
+
+
+🎓 APRENDER MÁS
+═════════════════════════════════════════
+
+FastAPI:        https://fastapi.tiangolo.com/
+Tesseract:      https://github.com/UB-Mannheim/tesseract/wiki
+python-docx:    https://python-docx.readthedocs.io/
+PDF2Image:      https://github.com/Belval/pdf2image
+
+
+═════════════════════════════════════════
+✨ Creado con ❤️ usando Python y FastAPI ✨
+═════════════════════════════════════════

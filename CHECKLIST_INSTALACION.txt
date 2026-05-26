@@ -1,0 +1,219 @@
+📋 CHECKLIST DE INSTALACIÓN Y CONFIGURACIÓN
+═════════════════════════════════════════════════════════════════════════════
+
+ANTES DE INSTALAR
+─────────────────────────────────────────────────────────────────────────────
+□ Dispones de al menos 500 MB de espacio libre en disco
+□ Tienes conexión a internet (para descargar dependencias)
+□ Tu PC tiene privilegios de administrador (para instalar Tesseract)
+□ Conoces cómo abrir cmd o PowerShell
+
+INSTALACIÓN DE TESSERACT OCR (PASO CRÍTICO)
+─────────────────────────────────────────────────────────────────────────────
+□ Ir a https://github.com/UB-Mannheim/tesseract/wiki
+□ Descargar tesseract-ocr-w64-setup-v5.x.x.exe (versión más reciente)
+□ Ejecutar el instalador como administrador
+□ Aceptar términos y condiciones
+□ Seleccionar ruta por defecto: C:\Program Files\Tesseract-OCR
+□ Durante instalación, marcar idiomas necesarios:
+  □ English
+  □ Spanish (Español)
+  □ [Otros idiomas si necesitas]
+□ Completar instalación
+□ Verificar: Abrir cmd y escribir: tesseract --version
+  □ Debe mostrar versión instalada (ej: tesseract 5.3.0)
+
+PREPARACIÓN DEL PROYECTO
+─────────────────────────────────────────────────────────────────────────────
+□ Descargar o clonar el proyecto pdf_to_word_converter
+□ Navegar a la carpeta del proyecto en cmd/PowerShell
+□ Verificar que existen los archivos:
+  □ main.py
+  □ pdf_converter.py
+  □ requirements.txt
+  □ install.bat
+  □ run.bat
+  □ static/index.html
+
+INSTALACIÓN AUTOMÁTICA (RECOMENDADO - WINDOWS)
+─────────────────────────────────────────────────────────────────────────────
+□ En Windows Explorer, ir a carpeta pdf_to_word_converter
+□ Doble clic en: install.bat
+□ Esperar a completar (5-10 minutos)
+□ Verificar mensajes finales:
+  □ "✓ Python detectado"
+  □ "✓ Entorno virtual creado"
+  □ "✓ Dependencias instaladas"
+  □ "✓ Tesseract detectado" (o advertencia si no está instalado)
+  □ "✓ Instalación completada correctamente"
+
+INSTALACIÓN MANUAL (MAC/LINUX O WINDOWS SIN .bat)
+─────────────────────────────────────────────────────────────────────────────
+
+Paso 1: Crear entorno virtual
+□ Abrir terminal/cmd
+□ cd pdf_to_word_converter
+□ python -m venv venv
+□ Verificar que se crea carpeta venv/
+
+Paso 2: Activar entorno virtual
+□ En Windows: venv\Scripts\activate
+□ En Mac/Linux: source venv/bin/activate
+□ Verificar que el prompt muestra "(venv)"
+
+Paso 3: Instalar dependencias
+□ pip install --upgrade pip setuptools wheel
+□ pip install -r requirements.txt
+□ Esperar a completar (3-5 minutos)
+□ Verificar sin errores
+
+VERIFICACIÓN DEL SISTEMA
+─────────────────────────────────────────────────────────────────────────────
+□ Ejecutar: python check_system.py
+□ Revisar el reporte de verificación
+□ Resolver cualquier problema detectado:
+  □ Si falta Python: Instalar desde python.org
+  □ Si falta Tesseract: Instalar desde GitHub
+  □ Si faltan librerías: Ejecutar pip install -r requirements.txt
+□ Re-ejecutar check_system.py para verificar que todo OK
+
+EJECUCIÓN DE LA APLICACIÓN
+─────────────────────────────────────────────────────────────────────────────
+
+Opción 1 - Script de ejecución (FÁCIL - Windows)
+□ Doble clic en: run.bat
+□ Se abrirá una ventana de cmd
+□ Verás: "🌐 Abre tu navegador en: http://localhost:8000"
+□ Mantener la ventana abierta mientras usas la app
+□ Para detener: Cerrar ventana o Ctrl+C
+
+Opción 2 - Manual
+□ Abrir cmd o PowerShell en carpeta del proyecto
+□ Activar entorno: venv\Scripts\activate
+□ Ejecutar: python main.py
+□ Esperar mensaje: "Uvicorn running on http://127.0.0.1:8000"
+□ Mantener cmd abierto
+
+Opción 3 - Con verificación previa
+□ Ejecutar: python check_system.py
+□ Si todo OK, ejecutar Opción 1 o 2
+□ Si hay problemas, resolver primero
+
+PRUEBA DE LA INTERFAZ WEB
+─────────────────────────────────────────────────────────────────────────────
+□ Abrir navegador (Chrome, Firefox, Edge, Safari, etc.)
+□ Navegar a: http://localhost:8000
+□ Verificar que carga la página (tiene título "PDF to Word")
+□ Verificar que se ve:
+  □ Título "PDF to Word" con icono
+  □ Área gris para arrastrar archivos
+  □ Botones "Convertir a Word" y "Limpiar"
+  □ Opciones de modo (Simple/Avanzado)
+
+PRUEBA DE FUNCIONAMIENTO
+─────────────────────────────────────────────────────────────────────────────
+□ Tener un archivo PDF de prueba pequeño (< 10 MB)
+□ Seleccionar modo: Simple (más rápido para prueba)
+□ Cargar el PDF:
+  □ Opción A: Arrastrar archivo al área gris
+  □ Opción B: Click en área para seleccionar
+□ Click en botón "Convertir a Word"
+□ Esperar a que se complete (10-30 segundos)
+□ Verificar que:
+  □ Se ve mensaje de progreso
+  □ Se descarga archivo .docx automáticamente
+  □ No hay errores en consola
+□ Abrir el archivo Word descargado
+□ Verificar que contiene texto del PDF
+
+PRUEBA MODO AVANZADO
+─────────────────────────────────────────────────────────────────────────────
+□ Seleccionar modo: Avanzado
+□ Cargar un PDF con diseño especial (tablas, gráficos, etc.)
+□ Convertir
+□ Esperar más tiempo (30-60 segundos)
+□ Verificar que el documento generado incluye:
+  □ Texto extraído
+  □ Imágenes/miniaturas de páginas
+  □ Mejor formato que modo simple
+
+VERIFICACIÓN POST-INSTALACIÓN
+─────────────────────────────────────────────────────────────────────────────
+□ Servidor está en ejecución sin errores
+□ Interfaz web carga correctamente
+□ API responde a peticiones
+□ Conversión simple funciona
+□ Conversión avanzada funciona
+□ Los archivos Word se descargan
+□ Los archivos Word son editables
+□ No hay mensajes de error en consola
+
+CONFIGURACIÓN OPCIONAL
+─────────────────────────────────────────────────────────────────────────────
+□ Si necesitas cambiar puerto: Editar main.py (port=8000)
+□ Si necesitas cambiar idioma OCR: Editar config.py (OCR_LANGUAGES)
+□ Si necesitas mejor calidad: Editar config.py (DPI=300)
+□ Si necesitas archivos más grandes: Editar config.py (MAX_FILE_SIZE_MB)
+□ Si Tesseract está en ruta no estándar: Editar pdf_converter.py
+
+CREAR PDF DE PRUEBA (SI NO TIENES)
+─────────────────────────────────────────────────────────────────────────────
+□ Opción 1: Usar documento de Word existente
+  □ Abrir en Word
+  □ Guardar como PDF
+□ Opción 2: Usar Google Docs
+  □ Crear documento
+  □ Descargar como PDF
+□ Opción 3: Usar cualquier documento digital
+  □ Usar Print → PDF de tu navegador
+□ Resultados: Tener un PDF de prueba de 1-10 MB
+
+PRÓXIMOS PASOS DESPUÉS DE INSTALACIÓN
+─────────────────────────────────────────────────────────────────────────────
+□ Leer README.md para documentación completa
+□ Probar ejemplos en examples.py (python examples.py)
+□ Explorar config.py para personalizaciones
+□ Procesar tus PDFs reales
+□ Compartir la herramienta con otros usuarios
+
+SOLUCIÓN DE PROBLEMAS EN LA INSTALACIÓN
+─────────────────────────────────────────────────────────────────────────────
+
+Si algo no funciona:
+□ Ejecutar: python check_system.py
+□ Leer: WINDOWS_SETUP.md
+□ Verificar:
+  □ Tesseract está instalado: tesseract --version
+  □ Python funciona: python --version
+  □ Entorno activado: (venv) en prompt
+  □ Dependencias instaladas: pip list | grep fastapi
+□ Reinstalar dependencias: pip install -r requirements.txt --upgrade
+□ Reiniciar PC
+□ Ejecutar instalador de nuevo
+
+MANTENER LA INSTALACIÓN
+─────────────────────────────────────────────────────────────────────────────
+□ Actualizar dependencias (cada 3 meses):
+  pip install -r requirements.txt --upgrade
+□ Mantener Tesseract actualizado
+□ Monitorear espacio en disco (uploads/outputs se limpian automáticamente)
+□ Hacer backup de configuraciones personalizadas (config.py)
+
+SOPORTE TÉCNICO
+─────────────────────────────────────────────────────────────────────────────
+En caso de problemas:
+□ Revisar archivos de documentación incluidos
+□ Ejecutar check_system.py
+□ Buscar en WINDOWS_SETUP.md (problemas comunes)
+□ Descargar Tesseract si falta
+□ Reinstalar dependencias
+□ Reiniciar aplicación
+□ Reiniciar PC
+
+═════════════════════════════════════════════════════════════════════════════
+
+✓ SIGUIENTE PASO: Ejecutar install.bat o seguir pasos manuales
+✓ Una vez instalado: Ejecutar run.bat o python main.py
+✓ Abrir: http://localhost:8000 en tu navegador
+
+═════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: pdf-to-word-converter
+    runtime: docker
+    region: oregon # Cambiar región si prefieres (ohio, singapore, etc)
+    plan: free # Cambiar a standard si necesitas más recursos
+
+    # Puerto
+    envVars:
+      - key: PORT
+        value: 8000
+
+    # Declarar los directorios persistentes (para uploads/outputs)
+    volumes:
+      - path: /app/uploads
+        name: uploads-volume
+      - path: /app/outputs
+        name: outputs-volume
+
+    # Configuración de auto-deploy
+    autoDeploy: true # Deploy automático cuando pushes a main
+
+    # Health check
+    healthCheckPath: /health
+    healthCheckInterval: 30
+
+    # Limpieza de headers
+    headers:
+      - http:
+          - path: "/*"
+            methods:
+              - GET
+              - POST
+              - OPTIONS
+            allowedOrigins:
+              - "*"
